@@ -8,9 +8,11 @@ using namespace std;
 
 int main() {
 
+    SetConsoleOutputCP(65001);
+
     string ruta;
 
-    cout << "Introduce la ruta del archivo de texto" << endl;
+    cout << "Introduce la ruta del archivo de texto: " << endl;
     cin >> ruta;
 
     int valorMenu = 0;
@@ -31,22 +33,31 @@ int main() {
 
             case 1:
                 system("cls");
-                cout << "Hay un total de " << contarLinea(ruta) << " lineas." << endl;
-                cout << "" << endl;
                 leerTexto(ruta);
+                cout << "----------------------------------------------------" << endl;
+                cout << "Hay un total de " << contarLinea(ruta) << " lineas." << endl;
                 getch();
                 system("cls");
                 break;
             
             case 2:
                 system("cls");
-                buscarPalabra("", ruta.c_str());
+
+                char* palabra;
+
+                cout << "Introduce una palabra a buscar: " << endl;
+                cin >> palabra;
+                cout << "----------------------------------" << endl;
+                buscarPalabra(palabra, ruta.c_str());
                 getch();
                 system("cls");
                 break;
             
             case 3: 
                 system("cls");
+                cout << "Texto sin espacios: " << endl;
+                cout << "----------------------------------" << endl;
+                quitarEspacios(ruta.c_str());
                 getch();
                 system("cls");
                 break;
