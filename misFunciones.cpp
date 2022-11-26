@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <string.h>
+#include <windows.h>
 
 using namespace std;
 
@@ -10,57 +11,83 @@ int leerTexto(string ruta) {
 
     string linea;
 
-    ifstream f(ruta);
+    ifstream archivo(ruta);
 
-    if (f.is_open()) {
-        getline(f, linea);
+    if (archivo.is_open()) {
+        getline(archivo, linea);
 
-        while (!f.eof()) {
+        while (!archivo.eof()) {
             cout << linea << endl;
-            getline(f, linea);
+            getline(archivo, linea);
         }
 
     }
 
-    getch();
-
 }
 
 int contarLinea(string ruta) {
+
     string linea;
 
     int contarLinea = 0;
 
-    ifstream f(ruta);
+    ifstream archivo(ruta);
 
-    if (f.is_open()) {
-        getline(f, linea);
+    if (archivo.is_open()) {
+        getline(archivo, linea);
 
-        while (!f.eof()) {
+        while (!archivo.eof()) {
             contarLinea = contarLinea + 1;
-            getline(f, linea);
+            getline(archivo, linea);
         }
 
     }
 
     return contarLinea;
+
 }
 
-void buscarPalabra(const char* palabra, const char* nombre) {
-    ifstream fichero(nombre);
+void buscarPalabra(const char* palabra, const char* ruta) {
+
+    ifstream fichero(ruta);
     char cadena[500];
-    int nlinea = 0;
+    int numerolinea = 0;
+    int numeroVeces = 0;
 
         if (fichero){
             while(fichero){
                 fichero.getline(cadena, 500);
-                nlinea++;
+                numerolinea++;
                 if (fichero) {
                     if (strstr(cadena, palabra)) {
-                        cout << cadena << endl;
+                        numeroVeces++;
+                        cout << cadena << "| " << "Linea " << numerolinea << endl;
                     }
                 }
             }
         }
+
+    cout << "----------------------------------" << endl;
+    cout << "Se ha encontrado " << numeroVeces << " veces" << endl;
             
+}
+
+void quitarEspacios(const char* ruta) {
+
+    FILE* fichero = fopen(ruta, "r");
+    ofstream ficheroSinEspacio("sinEspacio.txt");
+    char i;
+
+    for (i = getc(fichero); i != EOF; i = getc(fichero)) {
+
+        if (i != 32) {
+            cout << i;
+            ficheroSinEspacio << i;
+        }
+
+    }
+    
+    ficheroSinEspacio.close();
+    fclose(fichero);
+
 }
